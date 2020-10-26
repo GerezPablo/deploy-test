@@ -14,25 +14,26 @@ const userRegister = async(req, res = response) => {
             return res.status(400).json({
                 msg: 'The username or email is already in use, please choose another one.'
             })
+        } else {
+            
+            const user = new User(req.body);
+
+            //Encrypt password
+            const salt = bcrypt.genSaltSync();
+            user.password = bcrypt.hashSync(password, salt);
+
+            await user.save();
+
+            //Generate token
+            const token = await generateJWT(user.id, user.username);
+
+            return res.status(201).json({
+                msg: 'New user registered',
+                uid: user.id,
+                username: user.username,
+                token: token
+            });
         }
-        
-        const user = new User(req.body);
-
-        //Encrypt password
-        const salt = bcrypt.genSaltSync();
-        user.password = bcrypt.hashSync(password, salt);
-
-        await user.save();
-
-        //Generate token
-        const token = await generateJWT(user.id, user.username);
-
-        return res.status(201).json({
-            msg: 'New user registered',
-            uid: user.id,
-            username: user.username,
-            token: token
-        });
     }
 
     catch (error) {
@@ -65,12 +66,12 @@ const userLogin = async(req, res = response) => {
         }
 
         //Generate token
-        const token = await generateJWT(user.id,user.username);
+        const token = await generateJWT(user.id, user.username);
 
         return res.status(200).json({
             msg: `${user.username} logged in.`,
             uid: user.id,
-            name: user.username,
+            username: user.username,
             token: token
         })
     }

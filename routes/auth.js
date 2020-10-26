@@ -13,8 +13,8 @@ router.get('/', (req, res) => { res.json({isOn:true}) });
 //Register 
 router.post('/register', 
     [   //Middlewares
-        check('uname', 'Username cannot be empty.').not().isEmpty(),
-        check('uname', 'Username too short.').isLength({min:6}),
+        check('username', 'Username cannot be empty.').not().isEmpty(),
+        check('username', 'Username too short.').isLength({min:6}),
         check('password', 'Password cannot be empty.').not().isEmpty(),
         check('password', 'Password must have 6 characters at least.').isLength({min:6}),
         check('email', 'Email cannot be empty.').not().isEmpty(),
