@@ -2,20 +2,18 @@ const fetch = require('node-fetch');
 
 const api = async(topic) => {
     try {    
-        const key = '15310263-3c077b8973067ba768708060a';
-        const url =  `https://pixabay.com/api/?key=${key}&per_page=${5}&q=${encodeURI(topic)}&image_type=photo&lang=en`;
-        
-        const res = await fetch(url);
-        const {hits} = await res.json();
 
-        return hits.map(it => {
+        const url = `https://api.giphy.com/v1/gifs/search?q=${ encodeURI( topic ) }&limit=10&api_key=z4i75OOh3iae532MgfLYUS4vhLn8KOuT`;
+        const resp = await fetch( url );
+        const { data } = await resp.json();
+
+        return data.map( img => {
             return {
-                url: it.largeImageURL,
-                name: it.largeImageURL.split('/')[4],
-                id: it.id
-            };
-        });
-        
+                id: img.id,
+                title: img.title,
+                url: img.images.downsized_medium.url
+            }
+        })
     } 
     catch (error) { return error; }
 };

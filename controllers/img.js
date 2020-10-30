@@ -4,7 +4,7 @@ const {api} = require('../helpers/api');
 
 
 const getImages = async(req, res = response) => {
-    const topic = req.body.topic;
+    const topic = req.query.topic;
     const results = await api(topic);
     
     try {
