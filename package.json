@@ -1,5 +1,5 @@
 {
-  "name": "pixabay-web",
+  "name": "egeon",
   "version": "1.0.0",
   "description": "Web for image downloading",
   "main": "index.js",
@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/GerezPablo/pixabay-web.git"
+    "url": "git+https://github.com/GerezPablo/egeon.git"
   },
   "author": "Pablo Gerez <pablogerez2000@gmail.com>",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/GerezPablo/pixabay-web/issues"
+    "url": "https://github.com/GerezPablo/egeon/issues"
   },
-  "homepage": "https://github.com/GerezPablo/pixabay-web#readme",
+  "homepage": "https://github.com/GerezPablo/egeon#readme",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
