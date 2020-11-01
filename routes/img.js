@@ -1,7 +1,7 @@
 const {Router} = require('express');
 const {check} = require('express-validator');
 const {validateFields} = require('../middlewares/validateFields');
-const {getImages, getFavorites} = require('../controllers/img');
+const {getImages} = require('../controllers/img');
 
 const  router = Router();
 
@@ -15,6 +15,6 @@ router.get('/',
 
 
 //Favs 
-router.get('/favs', getFavorites);
+// router.get('/favs', getFavorites);
 
 module.exports = router;
