@@ -21,20 +21,20 @@ const getImages = async(req, res = response) => {
                 results: search.results
             });
 
-        } else {
+        } 
 
-            //Call the API to get the data
-            const results = await api(topic);
+        //Call the API to get the data
+        const results = await api(topic);
 
-            //Saves the search's topic and results into the database 
-            const newSearch = Search({ topic, results });
-            await newSearch.save();
+        //Saves the search's topic and results into the database 
+        const newSearch = Search({ topic, results });
+        await newSearch.save();
 
 
-            return res.status(200).json({
-                results: results
-            });
-        }
+        return res.status(200).json({
+            results: results
+        });
+
     } catch (error) {
         console.log(error);
         return res.status(500).json({
@@ -44,7 +44,9 @@ const getImages = async(req, res = response) => {
 }
 
 
-
+const getFavorites = async(req, res = response) => {
+    
+}
 
    
-module.exports = {getImages};
+module.exports = {getImages, getFavorites};
