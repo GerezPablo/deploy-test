@@ -3,6 +3,8 @@ const {check} = require('express-validator');
 const {validateFields} = require('../middlewares/validateFields');
 const {getImages, getFavorites} = require('../controllers/img');
 
+
+
 const  router = Router();
 
 //Root

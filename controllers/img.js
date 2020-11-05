@@ -21,7 +21,7 @@ const getImages = async(req, res = response) => {
                 results: search.results
             });
 
-        } 
+        }
 
         //Call the API to get the data
         const results = await api(topic);
@@ -30,22 +30,21 @@ const getImages = async(req, res = response) => {
         const newSearch = Search({ topic, results });
         await newSearch.save();
 
-
         return res.status(200).json({
             results: results
-        });
-
+        }); 
     } catch (error) {
-        console.log(error);
         return res.status(500).json({
             msg: 'Something gone wrong, please contact the admin'
         });
     }
 }
 
-
 const getFavorites = async(req, res = response) => {
+    const search = await Search.findOne().sort({counter:-1})
+    .then (res => {return res.topic});
     
+    return res.status(200).json({ topic:search });
 }
 
    
