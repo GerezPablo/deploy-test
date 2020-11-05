@@ -20,8 +20,9 @@ const getImages = async(req, res = response) => {
             return res.status(200).json({
                 results: search.results
             });
-
-        }
+        }   
+        
+        //Otherwise...
 
         //Call the API to get the data
         const results = await api(topic);
@@ -33,6 +34,7 @@ const getImages = async(req, res = response) => {
         return res.status(200).json({
             results: results
         }); 
+
     } catch (error) {
         return res.status(500).json({
             msg: 'Something gone wrong, please contact the admin'
@@ -40,11 +42,14 @@ const getImages = async(req, res = response) => {
     }
 }
 
+
+
 const getFavorites = async(req, res = response) => {
-    const search = await Search.findOne().sort({counter:-1})
-    .then (res => {return res.topic});
     
-    return res.status(200).json({ topic:search });
+    const search = await Search.findOne().sort({counter:-1})
+    .then (res => {return res.results});
+    
+    return res.status(200).json({ results:search });
 }
 
    

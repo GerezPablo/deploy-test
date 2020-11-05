@@ -5,7 +5,9 @@ const {generateJWT} = require('../helpers/jwt');
 
 //Register
 const userRegister = async(req, res = response) => {
-    const {username , password, email} = req.body;
+    
+    const { username , password, email } = req.body;
+
     try {
         const usernameAlreadyExists = await User.findOne({username}) != null;
         const emailAlreadyExists = await User.findOne({email}) != null;
@@ -14,26 +16,26 @@ const userRegister = async(req, res = response) => {
             return res.status(400).json({
                 msg: 'The username or email is already in use, please choose another one.'
             })
-        } else {
-            
-            const user = new User(req.body);
-
-            //Encrypt password
-            const salt = bcrypt.genSaltSync();
-            user.password = bcrypt.hashSync(password, salt);
-
-            await user.save();
-
-            //Generate token
-            const token = await generateJWT(user.id, user.username);
-
-            return res.status(201).json({
-                msg: 'New user registered',
-                uid: user.id,
-                username: user.username,
-                token: token
-            });
         }
+
+        const user = new User(req.body);
+
+        //Encrypt password
+        const salt = bcrypt.genSaltSync();
+        user.password = bcrypt.hashSync(password, salt);
+
+        //Save the user into the Database
+        await user.save();
+
+        //Generate token
+        const token = await generateJWT(user.id, user.username);
+
+        return res.status(201).json({
+            msg: 'New user registered',
+            uid: user.id,
+            username: user.username,
+            token: token
+        });
     }
 
     catch (error) {
@@ -46,7 +48,9 @@ const userRegister = async(req, res = response) => {
 
 //Login
 const userLogin = async(req, res = response) => {
+    
     try {
+
         const {email, password} = req.body;
         const user = await User.findOne({email});
         
@@ -84,6 +88,7 @@ const userLogin = async(req, res = response) => {
 }
 
 const tokenRenew = async(req, res = response) => {
+    
     const {uid, username} = await req;
 
     //Generate a new token
