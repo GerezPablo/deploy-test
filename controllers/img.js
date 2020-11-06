@@ -12,6 +12,7 @@ const getImages = async(req, res = response) => {
         const limit = req.query.limit;
         const offset = (req.query.offset -1);
 
+        
         const page =  limit * offset;
 
         const search = await Search.findOne({topic});
@@ -26,7 +27,6 @@ const getImages = async(req, res = response) => {
 
                 //Return the data from Database
                 return res.status(200).json({
-                    msg:"Same topic and page => DB",
                     results: search.page[offset].results
                 })
             }
@@ -40,7 +40,6 @@ const getImages = async(req, res = response) => {
             search.save();
 
             return res.status(200).json({
-                msg: "Same topic but not page => DB + API",
                 results: results
             })
         }
@@ -57,7 +56,6 @@ const getImages = async(req, res = response) => {
         await newSearch.save();
 
         return res.status(200).json({
-            msg: "Not same topic neither page => API ",
             results: results
         }); 
 
@@ -73,10 +71,10 @@ const getImages = async(req, res = response) => {
 
 const getFavorites = async(req, res = response) => {
     
-    const search = await Search.findOne().sort({counter:-1})
-    .then (res => {return res.results});
+    const topic = await Search.findOne().sort({counter:-1})
+    .then (res => {return res.topic});
     
-    return res.status(200).json({ results:search });
+    return res.status(200).json({ topic:topic });
 }
 
    

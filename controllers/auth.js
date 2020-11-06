@@ -39,7 +39,6 @@ const userRegister = async(req, res = response) => {
     }
 
     catch (error) {
-        console.log(error);
         return res.status(500).json({
             msg: 'Something gone wrong, please contact the admin'
         });
@@ -80,7 +79,6 @@ const userLogin = async(req, res = response) => {
         })
     }
     catch (error) {
-        console.log(error);
         return res.status(500).kson({
             msg: "There's no user with that email or password"
         })
