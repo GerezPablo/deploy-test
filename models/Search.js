@@ -6,11 +6,20 @@ const SearchSchema = Schema ({
         require: true,
         unique: true
     },
-    results: [{ url:String, title:String }],
     counter: {
         type: Number,
         default: 1
-    }
+    },
+    page: [{
+        number: {
+            type:Number,
+            default: 0
+        },
+        results: [{ 
+            url:String, 
+            title:String 
+        }], 
+    }]
 });
 
 

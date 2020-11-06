@@ -7,43 +7,47 @@ const getImages = async(req, res = response) => {
 
     try {
 
-        //Queries
         const topic = req.query.topic;
+
         const limit = req.query.limit;
         const offset = (req.query.offset -1);
 
+
+
         const page =  limit * offset;
 
-        const search = await Search.findOne({topic});
 
-        if (search != null) {
+        const search = await Search.findOne({topic, 'page.number': offset});
+        
+        // const search = await Search
+        //     .findOne()
+        //     .where('topic').equals(topic)
+        //     .where('page.number').equals(offset)
+            // .where('likes').in(['vaporizing', 'talking'])
+            // .limit(10)
+            // .sort('-occupation')
+            // .select('name occupation')
+            // .exec(callback);
+
+
+
+
+
+         const wasSearchedInThePast = (search != null);
+
+
+        if (wasSearchedInThePast) {
 
             //Increments the counter of the topic.
             await Search.updateOne(search, {$inc:{ counter: 1 }});
 
-            //Verifying if the page what is looking for is already charged in the Database then
-            if (search.page.some(p => p.number == offset)) {
-
-                //Return the data from Database
-                return res.status(200).json({
-                    msg:"Same topic and page => DB",
-                    results: search.page[offset].results
-                })
-            }
-
-            //If the topic was already searched but the page don't call the API and update the value in database.
-            const results = await api(topic,limit, page);
-
-            const newPage = {number:offset, results:results};
-
-            search.page.push(newPage);
-            search.save();
-
+            // Get the data from the Database.
             return res.status(200).json({
-                msg: "Same topic but not page => DB + API",
-                results: results
-            })
-        }
+                results: search
+            });
+        }   
+        
+
 
         //Otherwise...
 
@@ -52,14 +56,22 @@ const getImages = async(req, res = response) => {
 
 
         //Saves the search's topic and results into the database 
+
         const newSearch = Search({ topic:topic, page:{number:offset, results:results}});
         
-        await newSearch.save();
+        // //Add the new page.
+        await search.page.addToSet(results);
+        
+        // await newSearch.save();
+
+        // return res.status(200).json({
+        //     results: results
+        // }); 
 
         return res.status(200).json({
-            msg: "Not same topic neither page => API ",
-            results: results
-        }); 
+            msg: `No tengo weas de ${topic} de pag ${offset + 1} en la base pa`
+        })
+
 
     } catch (error) {
         return res.status(500).json({
