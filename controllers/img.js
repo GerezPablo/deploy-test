@@ -67,15 +67,5 @@ const getImages = async(req, res = response) => {
     }
 }
 
-
-
-const getFavorites = async(req, res = response) => {
-    
-    const topic = await Search.findOne().sort({counter:-1})
-    .then (res => {return res.topic});
-    
-    return res.status(200).json({ topic:topic });
-}
-
    
-module.exports = {getImages, getFavorites};
+module.exports = { getImages };

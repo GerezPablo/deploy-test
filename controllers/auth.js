@@ -78,6 +78,7 @@ const userLogin = async(req, res = response) => {
             token: token
         })
     }
+    
     catch (error) {
         return res.status(500).kson({
             msg: "There's no user with that email or password"
