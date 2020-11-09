@@ -23,4 +23,6 @@ const SearchSchema = Schema ({
 });
 
 
+
+
 module.exports = model('Search', SearchSchema);

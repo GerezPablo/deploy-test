@@ -23,10 +23,7 @@ const validateToken = (req, res = response, next) => {
         });
     }
 
-
     next();
-
-
 }
 
 
