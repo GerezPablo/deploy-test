@@ -10,7 +10,7 @@ A simple web page where you can search gifs powered by the Giphy API.
 ## My API <a name="myApi"></a>
 For the back-end part, I created my own server with express that runs on a pre-set port and receives all requests from the front-end.
 
-## My API <a name="structure"></a>
+## Structure <a name="structure"></a>
 In this 
 
 
